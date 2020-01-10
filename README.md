@@ -36,6 +36,7 @@ osmc@osmc:/usr/src$ sudo ln -s /usr/src/rbp2-headers-`uname -r` /lib/modules/`un
 First installation:
 
 ```console
+osmc@osmc:~$ sudo apt update
 osmc@osmc:~$ sudo apt install wireguard-dkms wireguard-tools wireguard
 ```
 
