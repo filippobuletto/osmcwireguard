@@ -29,6 +29,7 @@ osmc@osmc:/usr/src$ sudo rm -r rbp2-headers-`uname -r`/include/linux/*
 osmc@osmc:/usr/src$ sudo tar -xvf rbp2-source-`uname -r`.tar.bz2 rbp2-source-`uname -r`/include/linux
 osmc@osmc:/usr/src$ sudo cp -ar ./rbp2-source-`uname -r`/include/linux/* ./rbp2-headers-`uname -r`/include/linux/
 osmc@osmc:/usr/src$ sudo ln -s /usr/src/rbp2-headers-`uname -r` /lib/modules/`uname -r`/build
+osmc@osmc:/usr/src$ sudo rm rbp2-source-`uname -r`.tar.bz2
 ```
 
 ## 3. WireGuard installation
