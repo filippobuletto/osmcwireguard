@@ -2,6 +2,8 @@
 
 ## 1. Prepare the system
 
+Note: Raspberry Pi 1 & Zero must compile WireGuard manually and may skip this step.
+
 ```console
 osmc@osmc:~$ sudo apt update
 osmc@osmc:~$ sudo apt upgrade
@@ -32,6 +34,20 @@ osmc@osmc:/usr/src$ sudo ln -s /usr/src/rbp2-headers-`uname -r` /lib/modules/`un
 osmc@osmc:/usr/src$ sudo rm rbp2-source-`uname -r`.tar.bz2
 ```
 
+For Raspberry Pi 1 & Zero, use `rbp1-headers` and `rbp1-source`.
+
+
+```console
+osmc@osmc:~$ sudo apt-get install rbp1-headers-$(uname -r) rbp1-source-$(uname -r) libmnl-dev libelf-dev build-essential git pkg-config
+
+osmc@osmc:~$ cd /usr/src/
+osmc@osmc:/usr/src$ sudo rm -r rbp1-headers-`uname -r`/include/linux/*
+osmc@osmc:/usr/src$ sudo tar -xvf rbp1-source-`uname -r`.tar.bz2 rbp1-source-`uname -r`/include/linux
+osmc@osmc:/usr/src$ sudo cp -ar ./rbp1-source-`uname -r`/include/linux/* ./rbp1-headers-`uname -r`/include/linux/
+osmc@osmc:/usr/src$ sudo ln -s /usr/src/rbp1-headers-`uname -r` /lib/modules/`uname -r`/build
+osmc@osmc:/usr/src$ sudo rm rbp1-source-`uname -r`.tar.bz2
+```
+
 ## 3. WireGuard installation
 
 First installation:
@@ -45,6 +61,18 @@ After updating kernel, repeat `2.` and:
 
 ```console
 osmc@osmc:~$ sudo dpkg-reconfigure wireguard-dkms
+```
+
+For Raspberry Pi 1 & Zero, WireGuard must be compiled manually.
+
+```console
+osmc@osmc:~$ cd ~
+osmc@osmc:~$ git clone https://git.zx2c4.com/wireguard-linux-compat
+osmc@osmc:~$ git clone https://git.zx2c4.com/wireguard-tools
+osmc@osmc:~$ make -C wireguard-linux-compat/src -j$(nproc)
+osmc@osmc:~$ sudo make -C wireguard-linux-compat/src install
+osmc@osmc:~$ make -C wireguard-tools/src -j$(nproc)
+osmc@osmc:~$ sudo make -C wireguard-tools/src install
 ```
 
 ## Configure WireGuard
